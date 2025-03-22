@@ -1,0 +1,18 @@
+<div>
+    <div class="header">Welcome {{userInfo?.name}}</div>
+  
+    <div *ngIf="status === Status.LOADING">Loading, please wait...</div>
+  
+    <div class="card" *ngIf="status === Status.LOADED">
+      <img [src]="userInfo?.picture" alt="User" style="width: 100%">
+      <div class="color-black mt-5 mb-10">{{userInfo?.email}}</div>
+      <div class="color-black mb-10">
+        DoB: <span class="title color-black">{{userInfo?.birthdate}}</span>
+      </div>
+      <div class="color-black mb-10">
+        Ph: <span class="color-black">{{userInfo?.phone_number}}</span>
+      </div>
+    </div>
+  
+    <div *ngIf="status === Status.ERROR">Oops, there was an error. Please try again later.</div>
+  </div>
