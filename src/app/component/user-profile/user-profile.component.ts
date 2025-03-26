@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { UserInfo } from '../../models/user-info';
+import { AuthService } from '../../services/authService/auth.service';
 
 enum Status {
   LOADING = "LOADING",
@@ -10,13 +12,6 @@ enum Status {
   AUTHENTICATING = "AUTHENTICATING"
 }
 
-interface UserInfo {
-  name: string;
-  email: string;
-  picture: string;
-  birthdate: string;
-  phone_number: string;
-}
 
 interface ErrorInfo {
   errorCode: string;
@@ -38,6 +33,7 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private AuthService: AuthService,
     private http: HttpClient
   ) {}
 
@@ -45,6 +41,7 @@ export class UserProfileComponent implements OnInit {
     this.getQueryParams();
   }
 
+  
   private getQueryParams(): void {
     this.route.queryParams.subscribe(params => {
       const authCode = params['code'];
@@ -80,7 +77,7 @@ export class UserProfileComponent implements OnInit {
     }
 
     // Si les données n'existent pas, faites une requête à l'API
-    const endpoint = `http://localhost:8888/delegate/fetchUserInfo?code=${authCode}`;
+    const endpoint = `http://localhost:8080/api/delegate/fetchUserInfo?code=${authCode}`;
     
     this.http.get<UserInfo>(endpoint, {
         headers: {
@@ -98,7 +95,10 @@ export class UserProfileComponent implements OnInit {
         error: (err) => {
             this.error = { errorCode: "", errorMsg: err.message };
             this.status = Status.ERROR;
-        }
+        },
+        complete: () => {
+          console.log("complete");
+        },
     });
 }
 }

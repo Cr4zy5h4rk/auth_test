@@ -1,18 +1,34 @@
-<div>
-    <div class="header">Welcome {{userInfo?.name}}</div>
-  
-    <div *ngIf="status === Status.LOADING">Loading, please wait...</div>
-  
-    <div class="card" *ngIf="status === Status.LOADED">
-      <img [src]="userInfo?.picture" alt="User" style="width: 100%">
-      <div class="color-black mt-5 mb-10">{{userInfo?.email}}</div>
-      <div class="color-black mb-10">
-        DoB: <span class="title color-black">{{userInfo?.birthdate}}</span>
-      </div>
-      <div class="color-black mb-10">
-        Ph: <span class="color-black">{{userInfo?.phone_number}}</span>
-      </div>
-    </div>
-  
-    <div *ngIf="status === Status.ERROR">Oops, there was an error. Please try again later.</div>
+<div class="profile-container">
+  <div class="header">
+      <h1>Welcome {{userInfo?.firstName}} {{userInfo?.lastName}}</h1>
   </div>
+
+  <div *ngIf="status === Status.LOADING" class="loading">
+      <div class="spinner"></div>
+      <p>Loading, please wait...</p>
+  </div>
+
+  <div *ngIf="status === Status.LOADED" class="profile-card">
+      <div class="profile-image">
+          <img [src]="userInfo?.picture" alt="User">
+      </div>
+      <div class="profile-details">
+          <div class="detail">
+              <span class="label">Email:</span>
+              <span class="value">{{userInfo?.email}}</span>
+          </div>
+          <div class="detail">
+              <span class="label">Date of Birth:</span>
+              <span class="value">{{userInfo?.birthDate}}</span>
+          </div>
+          <div class="detail">
+              <span class="label">Phone:</span>
+              <span class="value">{{userInfo?.phoneNumber}}</span>
+          </div>
+      </div>
+  </div>
+
+  <div *ngIf="status === Status.ERROR" class="error">
+      <p>Oops, there was an error. Please try again later.</p>
+  </div>
+</div>

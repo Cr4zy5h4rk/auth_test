@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
-
 interface OidcConfig {
   acr_values: string;
   authorizeUri: string;
@@ -48,6 +47,22 @@ export class LoginComponent implements AfterViewInit {
     this.renderButton();
   }
 
+  randomString(length:number) {
+
+    const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    let result = '';
+
+    for ( let i = 0; i < length; i++ ) {
+
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+
+    }
+
+    return result;
+
+}
+
   private renderButton(): void {
     if (window.SignInWithEsignetButton) {
       window.SignInWithEsignetButton.init({
@@ -55,10 +70,10 @@ export class LoginComponent implements AfterViewInit {
           acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:biometrics mosip:idp:acr:static-code',
           authorizeUri: 'http://localhost:3000/authorize',
           claims_locales: 'en',
-          client_id: 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlNcFv',
+          client_id: 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj9vun',
           display: 'page',
           max_age: 21,
-          nonce: ,
+          nonce: this.randomString(10),
           prompt: 'consent',
           redirect_uri: 'http://localhost:4200/userprofile',
           scope: 'openid profile',
